@@ -6,3 +6,7 @@ functions:
     lang: go
     handler: ./helloworld
     image: kturcios/helloworld:latest
+  test:
+    lang: python
+    handler: ./test
+    image: kturcios/test:latest
