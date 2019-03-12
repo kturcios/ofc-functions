@@ -6,7 +6,3 @@ functions:
     lang: go
     handler: ./helloworld
     image: kturcios/helloworld:latest
-  example:
-    lang: python
-    handler: ./example
-    image: kturcios/example:latest
