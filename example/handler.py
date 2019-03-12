@@ -4,4 +4,4 @@ def handle(req):
         req (str): request body
     """
 
-    return "This is an example!"
+    return "This is an example 2!"
