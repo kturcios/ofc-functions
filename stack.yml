@@ -1,7 +1,7 @@
 version: 1.0
 provider:
   name: faas
-  gateway: http://127.0.0.1:8080
+  gateway: http://192.168.99.100:31112
 functions:
   helloworld:
     lang: go
@@ -11,5 +11,7 @@ functions:
     lang: node10-express
     handler: ./spotify
     image: kturcios/spotify:latest
+    environment:
+      exec_timeout: 30s
     secrets:
-      - client_id
+      - ofc-functions
