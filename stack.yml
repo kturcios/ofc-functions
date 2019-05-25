@@ -1,3 +1,4 @@
+version: 1.0
 provider:
   name: faas
   gateway: http://127.0.0.1:8080
@@ -6,3 +7,9 @@ functions:
     lang: go
     handler: ./helloworld
     image: kturcios/helloworld:latest
+  spotify:
+    lang: node10-express
+    handler: ./spotify
+    image: kturcios/spotify:latest
+    secrets:
+      - client_id
