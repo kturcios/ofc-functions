@@ -6,3 +6,4 @@ functions:
     lang: go
     handler: ./helloworld
     image: kturcios/helloworld:latest
+  
