@@ -18,3 +18,11 @@ For example:
 ```bash
 $ curl https://kturcios.o6s.io/spotify/6DCZcSspjsKoFjzjrWoCdn
 ```
+
+## Node Microservice
+This is an example for running a microservice workload. It follows the common workload properties:
+- serve HTTP traffic on TCP port 8080
+- create a lock file in /tmp/.lock - removing this file signals service degradation
+- assume ephemeral storage
+
+Read more about OpenFaaS workloads [here](https://docs.openfaas.com/reference/workloads/)
