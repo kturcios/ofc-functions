@@ -1,16 +1,20 @@
 "use strict"
-var fs = require('fs');
-var rp = require('request-promise');
+const fs = require('fs');
+const queryString = require('query-string');
+const rp = require('request-promise');
 
-module.exports = async (event, context) => {
-    if (event.method !== 'GET') {
+const spotifyAuthUrl = 'https://accounts.spotify.com/api/token';
+const spotifyApiUrl = 'https://api.spotify.com/v1';
+
+module.exports = async ({ method, path, query }, context) => {
+    if (method !== 'GET') {
         context.fail('Unsupported method');
         return;
     }
     try {
         let result = await login();
-        let track = await getTrack(JSON.parse(result), event.path);
-        context.succeed(track);
+        let spotifyResponse = await querySpotify(JSON.parse(result), path, query);
+        context.succeed(spotifyResponse);
     } catch (err) {
         context.fail(err);
     }
@@ -23,7 +27,7 @@ const login = () => {
 
     const options = {
         method: 'POST',
-        uri: 'https://accounts.spotify.com/api/token',
+        uri: spotifyAuthUrl,
         form: {
             grant_type: 'client_credentials'
         },
@@ -34,13 +38,13 @@ const login = () => {
     return rp(options);
 }
 
-const getTrack = ({access_token}, track_id) => {
-    if (track_id.length <= 1) {
-        throw "No track id provided";
+const querySpotify = ({ access_token }, path, query) => {
+    if (path.length <= 1) {
+        throw "No path provided";
     }
     const options = {
         method: 'GET',
-        uri: 'https://api.spotify.com/v1/tracks' + track_id,
+        uri: spotifyApiUrl + path + '?' + queryString.stringify(query),
         headers: {
             Authorization: 'Bearer ' + access_token
         }
